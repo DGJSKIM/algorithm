@@ -21,7 +21,7 @@ class Snail {
         int direction = 8; // 키보드 숫자키패드 기준 2468 아래 왼 오른 윗 처음은 무조건 윗방향
         int distance = 1;
 
-        int x = n/2;
+        int x = n/2; // int 라서 나머지 버림
         int y = n/2;
 
 

@@ -87,11 +87,8 @@ class Bingo {
         if(crossBingo2){
             Bcount++;
         }
-        
-        if(Bcount >= 3){
-            return true;
-        }
 
-        return false;
+
+        return Bcount >= 3;
     }
 }
