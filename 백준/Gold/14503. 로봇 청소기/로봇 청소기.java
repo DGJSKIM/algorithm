@@ -3,6 +3,15 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+
+
+    private static final int[] DR = {-1, 0, 1, 0};
+    private static final int[] DC = {0, 1, 0, -1};
+
+    private static final int BLOCKED = 1;
+    private static final int BLANK = 0;
+    private static final int CLEAN = -1;
+    private static int answer = 0;
     public static void main(String[] args) throws Exception {
         // n*m 크기
         // 벽 또는 빈칸으로 구성
@@ -59,46 +68,15 @@ public class Main {
         }
 
         public void back() {
-            switch (this.d) {
-                case 0:
-                    this.y = this.y + 1;
-                    break;
 
-                case 1:
-                    this.x = this.x - 1;
-                    break;
-                case 2:
-                    this.y = this.y - 1;
-                    break;
-
-                case 3:
-                    this.x = this.x + 1;
-                    break;
-
-
-            }
+            this.x = this.x + DC[(d+2)%4];
+            this.y = this.y + DR[(d+2)%4];
         }
 
         public void go(int d2) {
             this.d = d2;
-            switch (this.d) {
-                case 0:
-                    this.y = this.y - 1;
-                    break;
-
-                case 1:
-                    this.x = this.x + 1;
-                    break;
-                case 2:
-                    this.y = this.y + 1;
-                    break;
-
-                case 3:
-                    this.x = this.x - 1;
-                    break;
-
-
-            }
+            this.x = this.x + DC[d2];
+            this.y = this.y + DR[d2] ;
         }
     }
 
@@ -116,7 +94,11 @@ public class Main {
         public void clean(Robot robot) {
             int x = robot.getX();
             int y = robot.getY();
-            this.board[y][x] = -1;
+            if(this.board[y][x] == BLANK){
+                this.board[y][x] = -1;
+                answer++;
+            }
+
         }
 
         public void check(Robot robot) throws Exception {
@@ -133,20 +115,10 @@ public class Main {
                     int y2 = y;
                     try {
                         int d2 = (d + 3 * t) % 4;
-                        switch (d2) {
-                            case 0:
-                                y2--;
-                                break;
-                            case 1:
-                                x2++;
-                                break;
-                            case 2:
-                                y2++;
-                                break;
-                            case 3:
-                                x2--;
-                                break;
-                        }
+                        
+                        x2 = x2+DC[d2];
+                        y2 = y2+DR[d2] ;
+
                         if (this.board[y2][x2] == 0) {
                             break;
                         }
@@ -159,7 +131,7 @@ public class Main {
                 } else {
                     robot.back();
                     try {
-                        if (this.board[robot.getY()][robot.getX()] == 1) {
+                        if (this.board[robot.getY()][robot.getX()] == BLOCKED) {
                             checkCleanTiles();
                             end = true;
                         }
@@ -177,13 +149,8 @@ public class Main {
 
 
         private void checkCleanTiles() throws Exception {
-            long count = Arrays.stream(board)
-                    .flatMapToInt(Arrays::stream)
-                    .filter(x -> x == -1)
-                    .count();
-
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-            bw.write(String.valueOf(count));
+            bw.write(String.valueOf(answer));
             bw.newLine();
             bw.flush();
         }
