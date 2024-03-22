@@ -69,14 +69,14 @@ public class Main {
 
         public void back() {
 
-            this.x = DC[(d+2)%4];
-            this.y = DR[(d+2)%4];
+            this.x = this.x + DC[(d+2)%4];
+            this.y = this.y + DR[(d+2)%4];
         }
 
         public void go(int d2) {
             this.d = d2;
-            this.x = DC[d2];
-            this.y = DR[d2] ;
+            this.x = this.x + DC[d2];
+            this.y = this.y + DR[d2] ;
         }
     }
 
@@ -115,10 +115,10 @@ public class Main {
                     int y2 = y;
                     try {
                         int d2 = (d + 3 * t) % 4;
-                        switch (d2) {
-                            x2 = DC[d2];
-                            y2 = DR[d2] ;
-                        }
+                        
+                        x2 = x2+DC[d2];
+                        y2 = y2+DR[d2] ;
+
                         if (this.board[y2][x2] == 0) {
                             break;
                         }
