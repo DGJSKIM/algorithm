@@ -16,10 +16,9 @@ public class Main {
 
         long count = 0;
         for (int i = 0; i < N; i++) {
-            if(rooms[i] <= B){
-                count++;
-            } else{
-                count = count +1 + (rooms[i]-B)/C;
+            count++;
+            if(rooms[i]-B > 0){
+                count = count +(rooms[i]-B)/C;
                 if((rooms[i]-B)%C != 0){
                     count++;
                 }
