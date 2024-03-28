@@ -10,15 +10,11 @@ public class Main {
 
     public static boolean[] join;
     public static int minDiff = Integer.MAX_VALUE;
-    public static boolean[] start;
-    public static boolean[] zelda;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         teamWorks = new int[N][N];
-        start = new boolean[N];
-        zelda = new boolean[N];
         join = new boolean[N];
         for(int i=0; i<N; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -28,7 +24,7 @@ public class Main {
         }
         Arrays.fill(join,false);
         join[0]= true;
-        dfs(0,1);
+        dfs(1,1);
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         bw.write(String.valueOf(minDiff));
