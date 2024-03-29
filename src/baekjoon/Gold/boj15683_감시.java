@@ -81,26 +81,26 @@ public class boj15683_감시 {
         switch (cctv.type){
 
             case 1:// 한방향
-                see(r,c,d);
+                see(r,c,d%4);
                 break;
             case 2: // 양방향
-                see(r,c,d);
-                see(r,c,d+2%4);
+                see(r,c,d%4);
+                see(r,c,(d+2)%4);
                 break;
             case 3: // 방향 +1 방향
                 see(r,c,d);
-                see(r,c,d+1%4);
+                see(r,c,(d+1)%4);
                 break;
             case 4: // 방향 +1, 방향+2 방향
                 see(r,c,d);
-                see(r,c,d+1%4);
-                see(r,c,d+2%4);
+                see(r,c,(d+1)%4);
+                see(r,c,(d+2)%4);
                 break;
             case 5:
                 see(r,c,d);
-                see(r,c,d+1%4);
-                see(r,c,d+2%4);
-                see(r,c,d+3%4);
+                see(r,c,(d+1)%4);
+                see(r,c,(d+2)%4);
+                see(r,c,(d+3)%4);
                 break;
         }
     }
