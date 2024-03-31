@@ -10,17 +10,17 @@ public class 바이러스 {
     private int n,m,count;
     private boolean [] corrupted;
 
-    private Root[] roots;
+    private Route[] routes;
     private void solution() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         m = Integer.parseInt(br.readLine());
 
-        roots = new Root[m];
+        routes = new Route[m];
         corrupted = new boolean[n];//
         for (int i = 0; i <m;i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-            roots[i] = new Root(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
+            routes[i] = new Route(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
         }
 
         bfs();
@@ -39,10 +39,10 @@ public class 바이러스 {
         while (!q.isEmpty()){
             int s = q.poll();
             for (int i =0; i<m;i++){
-                Root root = roots[i];
-                if(root.isContain(s) && !corrupted[root.returnElse(s)-1]){
-                    q.add(root.returnElse(s));
-                    corrupted[root.returnElse(s)-1] = true;
+                Route route = routes[i];
+                if(route.isContain(s) && !corrupted[route.returnElse(s)-1]){
+                    q.add(route.returnElse(s));
+                    corrupted[route.returnElse(s)-1] = true;
                     count++;
                 }
             }
@@ -52,11 +52,11 @@ public class 바이러스 {
 
     }
 
-    private class Root{
+    private class Route{
         private int a;
         private int b;
 
-        public Root(int a, int b) {
+        public Route(int a, int b) {
             this.a = a;
             this.b = b;
         }
