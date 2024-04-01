@@ -44,6 +44,7 @@ public class 바이러스 {
                     q.add(route.returnElse(s));
                     corrupted[route.returnElse(s)-1] = true;
                     count++;
+
                 }
             }
         }
