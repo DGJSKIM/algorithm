@@ -1,5 +1,4 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -10,8 +9,10 @@ public class Main {
     private int N,M;
     private int passedTurn =0;
     boolean endGame = false;
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     private void solution() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         String str;
@@ -103,8 +104,10 @@ public class Main {
             passedTurn--;
             player.showDungeon();
             player.showState();
-            System.out.println("Press any key to continue.");
+            bw.write("Press any key to continue.");
         }
+
+        bw.flush();
     }
 
     private class Player {
@@ -227,7 +230,7 @@ public class Main {
             ARM += 2;
         }
 
-        private void fight(Monster m0) {
+        private void fight(Monster m0) throws IOException {
 
             Monster m = m0.copyMonster();
             boolean victory = true;
@@ -272,7 +275,7 @@ public class Main {
             }
 
         }
-        private void killMonster(Monster m) {
+        private void killMonster(Monster m) throws IOException {
 
             int exp = (this.EX)?(int)Math.floor(m.e*1.2):m.e;
             if (this.E_MAX - this.E_CUR <= exp) {
@@ -293,7 +296,7 @@ public class Main {
 
 
 
-        private void stepOnTrap(){
+        private void stepOnTrap() throws IOException {
             this.H_CUR -= DX?1:5;
 
             if (this.H_CUR <= 0) {
@@ -303,7 +306,7 @@ public class Main {
 
         }
 
-        private void gameOver() {
+        private void gameOver() throws IOException {
             if(RE){
                 RE = false;
                 for (int i = 0; i <rings.size(); i++) {
@@ -320,16 +323,17 @@ public class Main {
             }
             showDungeon();
             showState();
-            System.out.println(this.deathSign);
+            bw.write(this.deathSign);
             endGame = true;
         }
-        private void win() {
+        private void win() throws IOException {
             showDungeon();
             showState();
-            System.out.println("YOU WIN!");
+
+            bw.write("YOU WIN!");
             endGame = true;
         }
-        private void showDungeon(){
+        private void showDungeon() throws IOException {
             dungeon[this.r0][this.c0] = ".";
             if((dungeon[this.r][this.c].equals(".") || dungeon[this.r][this.c].equals("^"))&&this.H_CUR >0){
                 dungeon[this.r][this.c] = "@";
@@ -337,18 +341,20 @@ public class Main {
 
             for (int i=0; i<N;i++){
                 for (int j=0;j<M;j++){
-                    System.out.print(dungeon[i][j]);
+                    bw.write(dungeon[i][j]);
                 }
-                System.out.println();
+                bw.newLine();
             }
         }
-        private void showState(){
-            System.out.println("Passed Turns : " + ++passedTurn);
-            System.out.println("LV : " + this.LEVEL);
-            System.out.println("HP : " + Math.max(0,this.H_CUR) + "/" + this.H_MAX);
-            System.out.println("ATT : " + this.ATT + "+" + this.weapon.a );
-            System.out.println("DEF : " + this.ARM + "+" + this.armor.a );
-            System.out.println("EXP : " + this.E_CUR + "/" + this.E_MAX);
+        private void showState() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Passed Turns : ").append(++passedTurn).append("\n");
+            sb.append("LV : ").append(this.LEVEL).append("\n");
+            sb.append("HP : ").append(Math.max(0,this.H_CUR) + "/" + this.H_MAX).append("\n");
+            sb.append("ATT : ").append(this.ATT + "+" + this.weapon.a).append("\n");
+            sb.append("DEF : ").append(this.ARM + "+" + this.armor.a).append("\n");
+            sb.append("EXP : ").append(this.E_CUR + "/" + this.E_MAX).append("\n");
+            bw.write(sb.toString());
         }
     }
 
